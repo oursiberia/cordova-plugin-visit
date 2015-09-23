@@ -1,0 +1,23 @@
+<?xml version='1.0' encoding='utf-8'?>
+<plugin id="com.siberia.cordova.visit" version="0.0.1" xmlns="http://apache.org/cordova/ns/plugins/1.0" xmlns:android="http://schemas.android.com/apk/res/android">
+  <name>Visit</name>
+  <description>CLVisit support for Cordova</description>
+  <js-module name="visit" src="www/visit.js">
+    <clobbers target="plugins.visit" />
+  </js-module>
+  <platform name="ios">
+    <!-- required background modes:  App registers for location updates -->
+    <config-file target="*-Info.plist" parent="UIBackgroundModes">
+      <array>
+        <string>fetch</string>
+      </array>
+    </config-file>
+    <config-file parent="/*" target="config.xml">
+      <feature name="Visit">
+        <param name="ios-package" value="CDVVisit" />
+      </feature>
+    </config-file>
+    <source-file src="src/ios/CDVVisit.m" />
+    <header-file src="src/ios/CDVVisit.h" />
+  </platform>
+</plugin>
