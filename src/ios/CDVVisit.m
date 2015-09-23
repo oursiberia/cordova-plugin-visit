@@ -43,7 +43,7 @@
 }
 
 - (void)locationManager:(CLLocationManager *)manager didVisit:(CLVisit *)visit {
-  NSMutableDictionary *visit = [NSMutableDictionary dictionaryWithDictionary:@{
+  NSMutableDictionary *visitData = [NSMutableDictionary dictionaryWithDictionary:@{
                                    // @"name": [NSUserDefaults.standardUserDefaults objectForKey:@"name"],
                                     @"latitude": @(visit.coordinate.latitude),
                                     @"longitude": @(visit.coordinate.longitude),
@@ -51,10 +51,12 @@
                                     }];
 
   if (![visit.departureDate isEqualToDate:NSDate.distantFuture]) {
-    visit[@"departureDate"] = visit.departureDate;
+    visitData[@"departureDate"] = visit.departureDate;
   }
 
-  CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:visit];
+  NSDictionary *visitDict = [visitData copy];
+
+  CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:visitDict];
   [self.commandDelegate sendPluginResult:result callbackId:self.callbackId];
 }
 
