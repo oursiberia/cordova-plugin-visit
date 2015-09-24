@@ -2,7 +2,6 @@
 
 #import "CDVVisit.h"
 #import <Cordova/CDV.h>
-#import "LocationManager.h"
 
 @import CoreLocation;
 
