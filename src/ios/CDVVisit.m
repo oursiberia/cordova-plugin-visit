@@ -13,14 +13,9 @@
 
 @implementation CDVVisit
 
-- (id)init {
-  self = [super init];
-  if (!self) return nil;
-
+- (void)pluginInitialize {
   _manager = [[CLLocationManager alloc] init];
   self.manager.delegate = self;
-
-  return self;
 }
 
 - (void)startMonitoring:(CDVInvokedUrlCommand*)command {
