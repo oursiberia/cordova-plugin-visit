@@ -3,7 +3,7 @@
 #import "CDVVisit.h"
 #import <Cordova/CDV.h>
 
-@import CoreLocation;
+#import <CoreLocation/CoreLocation.h>
 
 @interface CDVVisit () <CLLocationManagerDelegate>
 
@@ -25,7 +25,10 @@
 
 #pragma mark - CLLocationDelegate
 - (void)locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status {
-  if (status == kCLAuthorizationStatusAuthorizedAlways) {
+  if (status == kCLAuthorizationStatusNotDetermined) {
+    // let the app continue to try authorizing
+  }
+  else if (status == kCLAuthorizationStatusAuthorizedAlways) {
     [manager startMonitoringVisits];
   }
   else {
