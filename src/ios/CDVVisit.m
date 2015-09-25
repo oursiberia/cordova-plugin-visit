@@ -3,7 +3,7 @@
 #import "CDVVisit.h"
 #import <Cordova/CDV.h>
 
-@import CoreLocation;
+#import <CoreLocation/CoreLocation.h>
 
 @interface CDVVisit () <CLLocationManagerDelegate>
 
@@ -25,7 +25,10 @@
 
 #pragma mark - CLLocationDelegate
 - (void)locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status {
-  if (status == kCLAuthorizationStatusAuthorizedAlways) {
+  if (status == kCLAuthorizationStatusNotDetermined) {
+    // let the app continue to try authorizing
+  }
+  else if (status == kCLAuthorizationStatusAuthorizedAlways) {
     [manager startMonitoringVisits];
   }
   else {
@@ -37,16 +40,15 @@
 }
 
 - (void)locationManager:(CLLocationManager *)manager didVisit:(CLVisit *)visit {
-  NSMutableDictionary *visitData = [NSMutableDictionary dictionaryWithDictionary:@{
-                                   // @"name": [NSUserDefaults.standardUserDefaults objectForKey:@"name"],
-                                    @"latitude": @(visit.coordinate.latitude),
-                                    @"longitude": @(visit.coordinate.longitude),
-                                    @"arrivalDate": visit.arrivalDate
-                                    }];
+    NSMutableDictionary *visitData = [NSMutableDictionary dictionaryWithCapacity:4];
 
+  // if departure date is valid it means we're done with this visit.
   if (![visit.departureDate isEqualToDate:NSDate.distantFuture]) {
-    visitData[@"departureDate"] = visit.departureDate;
+    [visitData setValue:[NSNumber numberWithInt:[visit.departureDate timeIntervalSince1970]] forKey:@"departureDate"];
   }
+  [visitData setValue:[NSNumber numberWithInt:[visit.arrivalDate timeIntervalSince1970]] forKey:@"arrivalDate"];
+  [visitData setValue:[NSNumber numberWithFloat:visit.coordinate.latitude] forKey:@"latitude"];
+  [visitData setValue:[NSNumber numberWithFloat:visit.coordinate.longitude] forKey:@"longitude"];
 
   NSDictionary *visitDict = [visitData copy];
 
