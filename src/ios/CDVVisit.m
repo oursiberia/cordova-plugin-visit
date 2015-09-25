@@ -27,6 +27,7 @@
 - (void)locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status {
   if (status == kCLAuthorizationStatusNotDetermined) {
     // let the app continue to try authorizing
+    [manager requestAlwaysAuthorization];
   }
   else if (status == kCLAuthorizationStatusAuthorizedAlways) {
     [manager startMonitoringVisits];
