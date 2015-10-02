@@ -14,17 +14,20 @@
 @implementation CDVVisit
 
 - (void)pluginInitialize {
+  NSLog(@"- CDVVisit pluginInitialize");
   _manager = [[CLLocationManager alloc] init];
   self.manager.delegate = self;
 }
 
 - (void)startMonitoring:(CDVInvokedUrlCommand*)command {
+  NSLog(@"- CDVVisit startMonitoring");
   self.callbackId = command.callbackId;
   [self.manager requestAlwaysAuthorization];
 }
 
 #pragma mark - CLLocationDelegate
 - (void)locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status {
+  NSLog(@"- CDVVisit didChangeAuthorizationStatus");
   if (status == kCLAuthorizationStatusNotDetermined) {
     // let the app continue to try authorizing
     [manager requestAlwaysAuthorization];
@@ -41,7 +44,8 @@
 }
 
 - (void)locationManager:(CLLocationManager *)manager didVisit:(CLVisit *)visit {
-    NSMutableDictionary *visitData = [NSMutableDictionary dictionaryWithCapacity:4];
+  NSLog(@"- CDVVisit didVisit");
+  NSMutableDictionary *visitData = [NSMutableDictionary dictionaryWithCapacity:4];
 
   // if departure date is valid it means we're done with this visit.
   if (![visit.departureDate isEqualToDate:NSDate.distantFuture]) {
