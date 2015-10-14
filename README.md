@@ -55,3 +55,6 @@ if( window.plugins.visit )
 1. https://developer.apple.com/library/ios/documentation/CoreLocation/Reference/CLLocationManager_Class/#//apple_ref/doc/uid/TP40007125-CH3-SW81
 1. https://developer.apple.com/library/ios/documentation/CoreLocation/Reference/CLLocationManagerDelegate_Protocol/index.html#//apple_ref/occ/intfm/CLLocationManagerDelegate/locationManager:didVisit:
 1. https://developer.apple.com/library/ios/documentation/CoreLocation/Reference/CLVisit_class/index.html#//apple_ref/swift/cl/c:objc(cs)CLVisit
+
+# License
+http://creativecommons.org/licenses/by-sa/4.0/
